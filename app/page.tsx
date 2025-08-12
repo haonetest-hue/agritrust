@@ -1,333 +1,362 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import {
-  Leaf,
-  Shield,
-  TrendingUp,
-  Users,
-  Globe,
-  Zap,
-  ArrowRight,
-  CheckCircle,
-  DollarSign,
-  Clock,
-  Award,
-  BarChart3,
-} from "lucide-react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
-import { useRole } from "@/components/providers/role-provider"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import { Progress } from "@/components/ui/progress"
+import { ArrowRight, Shield, TrendingUp, Globe, Zap, Users, CheckCircle, BarChart3, QrCode } from "lucide-react"
+
+const metrics = [
+  { label: "Market Size", value: "$2.4T", description: "Global agricultural market" },
+  { label: "Value Unlocked", value: "$500B+", description: "Through blockchain transparency" },
+  { label: "Transaction Speed", value: "≤3s", description: "Average settlement time" },
+  { label: "Transaction Cost", value: "$0.001", description: "Per transaction on Hedera" },
+]
+
+const socialProof = [
+  { label: "Farmers", value: "500+", description: "Active on platform" },
+  { label: "Funded", value: "$50M+", description: "Total funding provided" },
+  { label: "Lots Tracked", value: "1,000+", description: "Supply chain transparency" },
+  { label: "Countries", value: "15+", description: "Global reach" },
+]
+
+const benefits = [
+  {
+    icon: Shield,
+    title: "Blockchain Security",
+    description: "Immutable records on Hedera Hashgraph ensure data integrity and prevent fraud.",
+  },
+  {
+    icon: TrendingUp,
+    title: "Higher Returns",
+    description: "Earn 8-20% APY by investing directly in agricultural supply chains.",
+  },
+  {
+    icon: Globe,
+    title: "Global Access",
+    description: "Connect farmers worldwide with investors, removing geographical barriers.",
+  },
+  {
+    icon: Zap,
+    title: "Instant Settlements",
+    description: "Fast, low-cost transactions powered by Hedera and USDC payments.",
+  },
+  {
+    icon: Users,
+    title: "Verified Network",
+    description: "All participants verified through decentralized identity (DID) system.",
+  },
+  {
+    icon: CheckCircle,
+    title: "Quality Assured",
+    description: "Lab-verified quality attestations ensure product standards.",
+  },
+]
+
+const featuredProjects = [
+  {
+    id: 1,
+    title: "Ethiopian Coffee Cooperative",
+    location: "Sidamo, Ethiopia",
+    crop: "Arabica Coffee",
+    funding: 85000,
+    target: 100000,
+    apy: "18%",
+    duration: "8 months",
+    quality: "Grade A",
+    image: "/placeholder.svg?height=200&width=300&text=Coffee+Farm",
+  },
+  {
+    id: 2,
+    title: "Organic Rice Farm",
+    location: "Punjab, India",
+    crop: "Basmati Rice",
+    funding: 62000,
+    target: 75000,
+    apy: "15%",
+    duration: "6 months",
+    quality: "Organic Certified",
+    image: "/placeholder.svg?height=200&width=300&text=Rice+Farm",
+  },
+  {
+    id: 3,
+    title: "Cocoa Plantation",
+    location: "Ghana",
+    crop: "Premium Cocoa",
+    funding: 120000,
+    target: 150000,
+    apy: "20%",
+    duration: "12 months",
+    quality: "Fair Trade",
+    image: "/placeholder.svg?height=200&width=300&text=Cocoa+Farm",
+  },
+]
 
 export default function LandingPage() {
-  const { setRole } = useRole()
+  const [currentMetric, setCurrentMetric] = useState(0)
 
-  const handleGetStarted = () => {
-    // Navigate to role selection
-    window.location.href = "/role-selection"
-  }
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentMetric((prev) => (prev + 1) % metrics.length)
+    }, 3000)
+    return () => clearInterval(interval)
+  }, [])
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 via-blue-50 to-white">
+    <div className="min-h-screen bg-gradient-to-br from-green-50 via-blue-50 to-purple-50">
       {/* Hero Section */}
       <section className="relative overflow-hidden py-20 px-4">
-        <div className="container mx-auto max-w-6xl">
-          <div className="text-center mb-12">
-            <Badge className="mb-4 bg-green-100 text-green-800 hover:bg-green-200">
-              🚀 Unlocking $2.4 Trillion Agricultural Market
+        <div className="absolute inset-0 bg-gradient-to-r from-green-600/10 to-blue-600/10" />
+        <div className="relative max-w-7xl mx-auto text-center">
+          <div className="mb-8">
+            <Badge variant="secondary" className="mb-4 px-4 py-2 text-sm font-medium">
+              🌱 Revolutionizing Agriculture Finance
             </Badge>
-            <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
-              Democratize African Agriculture with <span className="text-green-600">8-20% APY</span>
+            <h1 className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent mb-6">
+              Unlock the $2.4 Trillion Agricultural Market
             </h1>
-            <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed">
-              Transform farmland into tokenized assets (RWA) on Hedera blockchain. Connect farmers with global investors
-              through transparent, secure, and profitable agricultural investments.
+            <p className="text-xl md:text-2xl text-gray-600 mb-8 max-w-4xl mx-auto leading-relaxed">
+              Connect farmers with global investors through blockchain-verified supply chains. Earn{" "}
+              <span className="font-bold text-green-600">8-20% APY</span> while supporting sustainable agriculture.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-              <Button
-                size="lg"
-                className="bg-green-600 hover:bg-green-700 text-white px-8 py-4 text-lg"
-                onClick={handleGetStarted}
-              >
-                Start Investing <ArrowRight className="ml-2 w-5 h-5" />
-              </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                className="border-green-600 text-green-600 hover:bg-green-50 px-8 py-4 text-lg bg-transparent"
-                asChild
-              >
-                <Link href="/marketplace">Explore Projects</Link>
-              </Button>
-            </div>
+          </div>
 
-            {/* Key Metrics */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
-              <div className="text-center">
-                <div className="text-3xl font-bold text-green-600">$500B+</div>
-                <div className="text-sm text-gray-600">Unlocked Value</div>
-              </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-blue-600">8-20%</div>
-                <div className="text-sm text-gray-600">APY Range</div>
-              </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-purple-600">≤3s</div>
-                <div className="text-sm text-gray-600">Transaction Speed</div>
-              </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-orange-600">$0.001</div>
-                <div className="text-sm text-gray-600">Transaction Cost</div>
-              </div>
+          {/* Dynamic Metrics Display */}
+          <div className="mb-12">
+            <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 max-w-md mx-auto shadow-lg border">
+              <div className="text-4xl font-bold text-gray-900 mb-2">{metrics[currentMetric].value}</div>
+              <div className="text-lg font-semibold text-gray-700 mb-1">{metrics[currentMetric].label}</div>
+              <div className="text-sm text-gray-500">{metrics[currentMetric].description}</div>
             </div>
+          </div>
+
+          {/* CTA Buttons */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
+            <Link href="/role-selection">
+              <Button
+                size="lg"
+                className="px-8 py-4 text-lg font-semibold bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700"
+              >
+                Start Investing
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+            </Link>
+            <Link href="/qr-tools">
+              <Button size="lg" variant="outline" className="px-8 py-4 text-lg font-semibold border-2 bg-transparent">
+                <QrCode className="mr-2 h-5 w-5" />
+                QR Tools
+              </Button>
+            </Link>
+          </div>
+
+          {/* Social Proof */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
+            {socialProof.map((stat, index) => (
+              <div key={index} className="text-center">
+                <div className="text-3xl font-bold text-gray-900 mb-1">{stat.value}</div>
+                <div className="text-sm font-medium text-gray-700 mb-1">{stat.label}</div>
+                <div className="text-xs text-gray-500">{stat.description}</div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Social Proof */}
-      <section className="py-12 bg-white">
-        <div className="container mx-auto max-w-6xl px-4">
-          <div className="text-center mb-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">Trusted by the Agricultural Community</h2>
+      {/* Benefits Section */}
+      <section className="py-20 px-4 bg-white/50">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">Why Choose AgriTrust?</h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              The first blockchain platform to combine agricultural finance, supply chain transparency, and verified
+              quality assurance in one ecosystem.
+            </p>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            <div>
-              <div className="text-2xl font-bold text-green-600">500+</div>
-              <div className="text-gray-600">Active Farmers</div>
-            </div>
-            <div>
-              <div className="text-2xl font-bold text-blue-600">$50M+</div>
-              <div className="text-gray-600">Total Funded</div>
-            </div>
-            <div>
-              <div className="text-2xl font-bold text-purple-600">1,000+</div>
-              <div className="text-gray-600">Tokenized Lots</div>
-            </div>
-            <div>
-              <div className="text-2xl font-bold text-orange-600">15+</div>
-              <div className="text-gray-600">African Countries</div>
-            </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {benefits.map((benefit, index) => (
+              <Card
+                key={index}
+                className="border-0 shadow-lg hover:shadow-xl transition-shadow bg-white/80 backdrop-blur-sm"
+              >
+                <CardHeader>
+                  <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-blue-500 rounded-lg flex items-center justify-center mb-4">
+                    <benefit.icon className="h-6 w-6 text-white" />
+                  </div>
+                  <CardTitle className="text-xl">{benefit.title}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <CardDescription className="text-gray-600 leading-relaxed">{benefit.description}</CardDescription>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Featured Projects */}
+      <section className="py-20 px-4">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">Featured Investment Opportunities</h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Discover verified agricultural projects with transparent supply chains and guaranteed returns.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {featuredProjects.map((project) => (
+              <Card key={project.id} className="overflow-hidden shadow-lg hover:shadow-xl transition-shadow bg-white">
+                <div className="aspect-video bg-gradient-to-br from-green-100 to-blue-100 flex items-center justify-center">
+                  <img
+                    src={project.image || "/placeholder.svg"}
+                    alt={project.title}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <CardHeader>
+                  <div className="flex justify-between items-start mb-2">
+                    <CardTitle className="text-lg">{project.title}</CardTitle>
+                    <Badge variant="secondary" className="bg-green-100 text-green-800">
+                      {project.apy} APY
+                    </Badge>
+                  </div>
+                  <CardDescription className="text-sm text-gray-600">
+                    {project.location} • {project.crop}
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    <div>
+                      <div className="flex justify-between text-sm mb-2">
+                        <span>Funding Progress</span>
+                        <span className="font-medium">
+                          ${project.funding.toLocaleString()} / ${project.target.toLocaleString()}
+                        </span>
+                      </div>
+                      <Progress value={(project.funding / project.target) * 100} className="h-2" />
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-4 text-sm">
+                      <div>
+                        <div className="text-gray-500">Duration</div>
+                        <div className="font-medium">{project.duration}</div>
+                      </div>
+                      <div>
+                        <div className="text-gray-500">Quality</div>
+                        <div className="font-medium">{project.quality}</div>
+                      </div>
+                    </div>
+
+                    <Button className="w-full bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700">
+                      Invest Now
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
           </div>
         </div>
       </section>
 
       {/* How It Works */}
-      <section className="py-20 px-4">
-        <div className="container mx-auto max-w-6xl">
+      <section className="py-20 px-4 bg-gradient-to-r from-green-600 to-blue-600 text-white">
+        <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">How AgriTrust Works</h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Simple, transparent, and secure process for both farmers and investors
-            </p>
-          </div>
-
-          {/* For Investors */}
-          <div className="mb-16">
-            <h3 className="text-2xl font-bold text-center mb-8 text-blue-600">For Investors</h3>
-            <div className="grid md:grid-cols-4 gap-8">
-              <div className="text-center">
-                <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Globe className="w-8 h-8 text-blue-600" />
-                </div>
-                <h4 className="font-semibold mb-2">1. Explore</h4>
-                <p className="text-gray-600 text-sm">
-                  Browse verified agricultural lots tokenized as NFTs on Hedera blockchain
-                </p>
-              </div>
-              <div className="text-center">
-                <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <DollarSign className="w-8 h-8 text-blue-600" />
-                </div>
-                <h4 className="font-semibold mb-2">2. Fund</h4>
-                <p className="text-gray-600 text-sm">
-                  Invest securely using USDC with smart contract escrow protection
-                </p>
-              </div>
-              <div className="text-center">
-                <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <BarChart3 className="w-8 h-8 text-blue-600" />
-                </div>
-                <h4 className="font-semibold mb-2">3. Track</h4>
-                <p className="text-gray-600 text-sm">Monitor real-time progress via Hedera Consensus Service</p>
-              </div>
-              <div className="text-center">
-                <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <TrendingUp className="w-8 h-8 text-blue-600" />
-                </div>
-                <h4 className="font-semibold mb-2">4. Earn</h4>
-                <p className="text-gray-600 text-sm">Receive 8-20% APY returns after successful harvest and sale</p>
-              </div>
-            </div>
-          </div>
-
-          {/* For Farmers */}
-          <div>
-            <h3 className="text-2xl font-bold text-center mb-8 text-green-600">For Farmers</h3>
-            <div className="grid md:grid-cols-4 gap-8">
-              <div className="text-center">
-                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <CheckCircle className="w-8 h-8 text-green-600" />
-                </div>
-                <h4 className="font-semibold mb-2">1. Apply</h4>
-                <p className="text-gray-600 text-sm">
-                  Submit your farmland and project for verification by AgriTrust team
-                </p>
-              </div>
-              <div className="text-center">
-                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Zap className="w-8 h-8 text-green-600" />
-                </div>
-                <h4 className="font-semibold mb-2">2. Tokenize</h4>
-                <p className="text-gray-600 text-sm">
-                  Your approved farmland becomes a digital asset (NFT) ready for funding
-                </p>
-              </div>
-              <div className="text-center">
-                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <DollarSign className="w-8 h-8 text-green-600" />
-                </div>
-                <h4 className="font-semibold mb-2">3. Receive</h4>
-                <p className="text-gray-600 text-sm">
-                  Get working capital directly to your wallet once funding target is met
-                </p>
-              </div>
-              <div className="text-center">
-                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Clock className="w-8 h-8 text-green-600" />
-                </div>
-                <h4 className="font-semibold mb-2">4. Report</h4>
-                <p className="text-gray-600 text-sm">
-                  Update farming progress regularly to maintain transparency with investors
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Why Choose AgriTrust */}
-      <section className="py-20 bg-gray-50 px-4">
-        <div className="container mx-auto max-w-6xl">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Why Choose AgriTrust?</h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Built on Hedera blockchain for maximum security, speed, and sustainability
+            <h2 className="text-4xl font-bold mb-4">How AgriTrust Works</h2>
+            <p className="text-xl opacity-90 max-w-3xl mx-auto">
+              Three simple steps to start earning returns while supporting global agriculture.
             </p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
-            <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow">
-              <CardHeader>
-                <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
-                  <Shield className="w-6 h-6 text-green-600" />
-                </div>
-                <CardTitle>Enterprise Security</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-gray-600">
-                  Built on Hedera's enterprise-grade blockchain with bank-level security and regulatory compliance.
-                </p>
-              </CardContent>
-            </Card>
+            <div className="text-center">
+              <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                <Users className="h-8 w-8" />
+              </div>
+              <h3 className="text-2xl font-bold mb-4">1. Choose Your Role</h3>
+              <p className="opacity-90 leading-relaxed">
+                Select whether you're a farmer seeking funding, an investor looking for returns, or a buyer wanting
+                traceable products.
+              </p>
+            </div>
 
-            <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow">
-              <CardHeader>
-                <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
-                  <Zap className="w-6 h-6 text-blue-600" />
-                </div>
-                <CardTitle>Lightning Fast</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-gray-600">
-                  Transactions settle in ≤3 seconds with predictable fees as low as $0.001 per transaction.
-                </p>
-              </CardContent>
-            </Card>
+            <div className="text-center">
+              <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                <Shield className="h-8 w-8" />
+              </div>
+              <h3 className="text-2xl font-bold mb-4">2. Verify & Connect</h3>
+              <p className="opacity-90 leading-relaxed">
+                Complete identity verification through our DID system and connect with verified participants in the
+                agricultural ecosystem.
+              </p>
+            </div>
 
-            <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow">
-              <CardHeader>
-                <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
-                  <Leaf className="w-6 h-6 text-purple-600" />
-                </div>
-                <CardTitle>Carbon Negative</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-gray-600">
-                  Hedera is carbon-negative, making your agricultural investments environmentally sustainable.
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow">
-              <CardHeader>
-                <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mb-4">
-                  <TrendingUp className="w-6 h-6 text-orange-600" />
-                </div>
-                <CardTitle>High Returns</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-gray-600">
-                  Earn 8-20% APY through direct agricultural investments with transparent profit sharing.
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow">
-              <CardHeader>
-                <div className="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mb-4">
-                  <Users className="w-6 h-6 text-red-600" />
-                </div>
-                <CardTitle>Social Impact</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-gray-600">
-                  Directly support African farmers and contribute to food security while earning returns.
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow">
-              <CardHeader>
-                <div className="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center mb-4">
-                  <Award className="w-6 h-6 text-indigo-600" />
-                </div>
-                <CardTitle>Full Transparency</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-gray-600">
-                  Track every step from seed to sale with immutable records on Hedera Consensus Service.
-                </p>
-              </CardContent>
-            </Card>
+            <div className="text-center">
+              <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                <TrendingUp className="h-8 w-8" />
+              </div>
+              <h3 className="text-2xl font-bold mb-4">3. Earn & Track</h3>
+              <p className="opacity-90 leading-relaxed">
+                Start earning returns on your investments while tracking every step of the supply chain through
+                blockchain transparency.
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-green-600 to-blue-600 px-4">
-        <div className="container mx-auto max-w-4xl text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">Ready to Transform Agriculture?</h2>
-          <p className="text-xl text-green-100 mb-8 max-w-2xl mx-auto">
-            Join thousands of investors and farmers already building the future of sustainable agriculture on
-            blockchain.
+      {/* Stats Section */}
+      <section className="py-20 px-4 bg-gray-900 text-white">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold mb-4">Platform Statistics</h2>
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+              Real numbers from our growing agricultural finance ecosystem.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            {metrics.map((metric, index) => (
+              <div key={index} className="text-center">
+                <div className="text-4xl font-bold mb-2 bg-gradient-to-r from-green-400 to-blue-400 bg-clip-text text-transparent">
+                  {metric.value}
+                </div>
+                <div className="text-lg font-semibold mb-1">{metric.label}</div>
+                <div className="text-sm text-gray-400">{metric.description}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Final CTA */}
+      <section className="py-20 px-4 bg-gradient-to-br from-green-50 to-blue-50">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-4xl font-bold text-gray-900 mb-6">Ready to Transform Agriculture Finance?</h2>
+          <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+            Join thousands of farmers and investors already using AgriTrust to create a more transparent and profitable
+            agricultural ecosystem.
           </p>
+
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button
-              size="lg"
-              className="bg-white text-green-600 hover:bg-gray-100 px-8 py-4 text-lg font-semibold"
-              onClick={handleGetStarted}
-            >
-              Get Started Now <ArrowRight className="ml-2 w-5 h-5" />
-            </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              className="border-white text-white hover:bg-white hover:text-green-600 px-8 py-4 text-lg bg-transparent"
-              asChild
-            >
-              <Link href="/qr-tools">Try QR Tools</Link>
-            </Button>
+            <Link href="/role-selection">
+              <Button
+                size="lg"
+                className="px-8 py-4 text-lg font-semibold bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700"
+              >
+                Get Started Today
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+            </Link>
+            <Link href="/marketplace">
+              <Button size="lg" variant="outline" className="px-8 py-4 text-lg font-semibold border-2 bg-transparent">
+                <BarChart3 className="mr-2 h-5 w-5" />
+                Explore Marketplace
+              </Button>
+            </Link>
           </div>
         </div>
       </section>
